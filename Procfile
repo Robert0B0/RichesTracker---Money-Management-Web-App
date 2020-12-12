@@ -1,0 +1,1 @@
+web: gunicorn RichesTraker.wsgi --log-file -

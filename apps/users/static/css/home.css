@@ -1,0 +1,38 @@
+.Expenses {
+    color: #921919;
+}
+
+.Unforseen {
+    color: #f66300;
+}
+
+.Upkeep {
+    color: #851f00;
+}
+    
+.MonthylIncome {
+    color: #1c9923;
+}
+
+.Other {
+    color: #509e7e;
+}
+
+.GoalComplete{
+    color: #a17e1d;
+}
+
+.Investment{
+    color: #968e1e;
+}
+
+.Dividents{
+    color: #282188;
+}
+
+.fc-event {
+    font-size: large !important;
+    font-weight: bold !important;
+    text-align: center !important;
+    height:35px !important;
+  }

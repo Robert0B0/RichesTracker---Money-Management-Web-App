@@ -1,0 +1,42 @@
+{% extends 'users/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    .profile-pic{
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-body special-card">
+                <a class="btn btn-outline-secondary btn-lg" href="{% url 'home' %}"> &#8592; Back to Pofile</a>
+                <hr>
+                <h3 style="text-align: center">Account Settings</h3>
+                <hr>
+                <img class="profile-pic" src="{{ request.user.moneyuser.profile_pic.url }}" alt="...">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-body special-card">
+
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="" style="font-size: 20px;">{{form.as_p}}</div> 
+
+                    <input class="btn btn-primary btn-lg" type="submit" name="Update Information">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
