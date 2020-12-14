@@ -39,7 +39,7 @@ def create_goal(request):
         form = GoalForm(request.POST)
         if form.is_valid:
             form.save()
-            return redirect('/goals/goals/')
+            return redirect('/goals/')
 
     context = {'form': form}
     context = {**context_add(request), **context}
@@ -55,7 +55,7 @@ def update_goal(request, pk):
         form = GoalForm(request.POST, instance=goal)
         if form.is_valid:
             form.save()
-            return redirect('/goals/goals/')
+            return redirect('/goals/')
 
     context = {'form': form, 'goal': goal}
     context = {**context_add(request), **context}
@@ -88,7 +88,7 @@ def complete_goal(request, pk):
         record.save()
 
         goal.delete()
-        return redirect('/goals/goals/')
+        return redirect('/goals/')
 
     context = {'goal': goal}
     context = {**context_add(request), **context}
@@ -101,7 +101,7 @@ def delete_goal(request, pk):
     goal = monetaryGoals.objects.get(id=pk)
     if request.method == 'POST':
         goal.delete()
-        return redirect('/goals/goals/')
+        return redirect('/goals/')
         
     context = {'goal': goal}
     context = {**context_add(request), **context}

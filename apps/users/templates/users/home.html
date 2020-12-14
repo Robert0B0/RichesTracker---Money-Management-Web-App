@@ -7,17 +7,10 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.css">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.4.0/main.min.js"></script>
-    <link rel="stylesheet" href="{% static 'users/static/css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'users/css/home.css' %}">
 </head>
 
-<style>
-    .fc-event {
-        font-size: medium !important;
-        font-weight: bold !important;
-        text-align: center !important;
-        height:25px !important;
-      }
-</style>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -140,88 +133,77 @@
 {% endblock %}
 {% block js %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-flash-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fh-3.1.4/r-2.2.2/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-flash-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fh-3.1.4/r-2.2.2/datatables.min.css"/>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.18/af-2.3.0/b-1.5.2/b-colvis-1.5.2/b-flash-1.5.2/b-html5-1.5.2/b-print-1.5.2/cr-1.5.0/fh-3.1.4/r-2.2.2/datatables.min.js"></script>
 <script scr="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
 <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
 
-<script >
-
-    $(document).ready( function () {
-        $('.table_id').DataTable({
-        
-        dom: 'B<"clear">lfrtip',
-        buttons: {
-            name: 'primary',
-            buttons: [ 'copy', 'csv', 'excel', 'pdf' ]
-        
-            }}
-        );
-        } );
-           
+<script src="{% static 'users/js/home.js' %}"></script>
+<script>
     var rec_types = JSON.parse("{{rec_types_JSON|escapejs}}");
-    var rec_titles = JSON.parse("{{rec_names_JSON|escapejs}}");
-    var rec_starts = JSON.parse("{{rec_start_JSON|escapejs}}");
-    var rec_value = JSON.parse("{{rec_value_JSON}}");
-    var rec_len = JSON.parse("{{rec_total_JSON|escapejs}}");
-    var rec_color = JSON.parse("{{rec_color_JSON|escapejs}}");
-    var rec_id = JSON.parse("{{rec_id_JSON|escapejs}}");
-    
-    var recData = [];
-    for(var i = 0; i < rec_len; i++) {
-        recData.push(   {   
-                            title: "$" + rec_value[i], 
-                            start: rec_starts[i].substring(1, rec_starts[i].length-1),
-                            description: "&nbsp record: <u>" + rec_titles[i] + "</u> ,  <br>" + 
-                                         "&nbsp type: " + rec_types[i] + " ,  <br>" + 
-                                         " &nbsp valuing: $" + rec_value[i] + " , &nbsp <br> " +
-                                         " &nbsp date: " + rec_starts[i].substring(1, rec_starts[i].length-1) + " , &nbsp <br>" +
-                                         " &nbsp click to edit. &nbsp",
-                            backgroundColor: rec_color[i],
-                            url: "{% url 'record_form' 123 %}".replace('123', rec_id[i])
-                        } 
-                    ) 
-    }
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            initialDate: '2020-11-07',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth'
-            },  
-            events: recData,
-            eventClick: function(info) {
-            window.location.replace(event.url);
-            },
-            eventMouseEnter: function(calEvent) {
-                var tooltip = '<div class="tooltipevent" style="width:auto; height:auto; vertical-align:middle; position:absolute; background:'+calEvent.el.style.backgroundColor+'; color: white; font-size: 25px !important; font-weight: bold ">' + calEvent.event._def.extendedProps.description + '</div>';
-                $("body").append(tooltip);
-                $(this.el).mouseover(function(e) {
-                    $(this.el).css('z-index', 10000);
-                    $('.tooltipevent').fadeIn('500');
-                    $('.tooltipevent').fadeTo('10', 1.9);
-                }).mousemove(function(e) {
-                    $('.tooltipevent').css('top', e.pageY + 10);
-                    $('.tooltipevent').css('left', e.pageX + 20);
-                });},
-                
-                eventMouseLeave: function(calEvent, jsEvent) {
-                 $(this.el).css('z-index', 8);
-                 $('.tooltipevent').remove();},
-         
-        });
-    
-        calendar.render();
-      });
+var rec_titles = JSON.parse("{{rec_names_JSON|escapejs}}");
+var rec_starts = JSON.parse("{{rec_start_JSON|escapejs}}");
+var rec_value = JSON.parse("{{rec_value_JSON}}");
+var rec_len = JSON.parse("{{rec_total_JSON|escapejs}}");
+var rec_color = JSON.parse("{{rec_color_JSON|escapejs}}");
+var rec_id = JSON.parse("{{rec_id_JSON|escapejs}}");
 
-</script>  
+var recData = [];
+for(var i = 0; i < rec_len; i++) {
+    recData.push(   {   
+                        title: "$" + rec_value[i], 
+                        start: rec_starts[i].substring(1, rec_starts[i].length-1),
+                        description: "&nbsp record: <u>" + rec_titles[i] + "</u> ,  <br>" + 
+                                     "&nbsp type: " + rec_types[i] + " ,  <br>" + 
+                                     " &nbsp valuing: $" + rec_value[i] + " , &nbsp <br> " +
+                                     " &nbsp date: " + rec_starts[i].substring(1, rec_starts[i].length-1) + " , &nbsp <br>" +
+                                     " &nbsp click to edit. &nbsp",
+                        backgroundColor: rec_color[i],
+                        url: "{% url 'record_form' 123 %}".replace('123', rec_id[i])
+                    } 
+                ) 
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        initialDate: '2020-11-07',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth'
+        },  
+        events: recData,
+        eventClick: function(info) {
+        window.location.replace(event.url);
+        },
+        eventMouseEnter: function(calEvent) {
+            var tooltip = '<div class="tooltipevent" style="width:auto; height:auto; vertical-align:middle; position:absolute; background:'+calEvent.el.style.backgroundColor+'; color: white; font-size: 25px !important; font-weight: bold ">' + calEvent.event._def.extendedProps.description + '</div>';
+            $("body").append(tooltip);
+            $(this.el).mouseover(function(e) {
+                $(this.el).css('z-index', 10000);
+                $('.tooltipevent').fadeIn('500');
+                $('.tooltipevent').fadeTo('10', 1.9);
+            }).mousemove(function(e) {
+                $('.tooltipevent').css('top', e.pageY + 10);
+                $('.tooltipevent').css('left', e.pageX + 20);
+            });},
+            
+            eventMouseLeave: function(calEvent, jsEvent) {
+             $(this.el).css('z-index', 8);
+             $('.tooltipevent').remove();},
+     
+    });
+
+    calendar.render();
+  });
+</script>
+
+
 {% endblock %}
 
 

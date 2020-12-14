@@ -1,0 +1,54 @@
+body {
+    /*
+    background: url("/static/images/finances-2-B&W.jpg") fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    */
+    background: lightgray;
+}
+
+
+.Expenses {
+    color: #921919;
+}
+
+.Unforseen {
+    color: #f66300;
+}
+
+.Upkeep {
+    color: #c36363;
+}
+    
+.MonthylIncome {
+    color: #2cce34;
+}
+
+.Other {
+    color: #509e7e;
+}
+
+.GoalComplete{
+    color: #a17e1d;
+}
+
+.Investment{
+    color: #968e1e;
+}
+
+.InvestmentCash{
+    color: #961e78;
+}
+
+.SavingTip{
+    color: #8b9530;
+}
+
+.Dividents{
+    color: #282188;
+}
+
+.SavingFunds{
+    color: #9c79b9;
+}

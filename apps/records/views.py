@@ -124,7 +124,6 @@ def delete_record(request, pk):
     return render(request, 'records/record_delete.html', context)
 
 
-
 @login_required(login_url='login_page')
 @allowed_users(allowed_roles=['admins', 'monetary_users'])
 def create_record_modal(request):
@@ -138,7 +137,7 @@ def create_record_modal(request):
         else:
             data['form_is_valid'] = False
     else:
-        form = RecordForm()
+        create_record_form = RecordForm()
 
     context = {'create_record_form': create_record_form}
     data['html_form'] = render_to_string('records/record_add.html',
@@ -148,10 +147,35 @@ def create_record_modal(request):
     return JsonResponse(data)
 
 
+@login_required(login_url='login_page')
+@allowed_users(allowed_roles=['admins', 'monetary_users'])
+def update_record_modal(request):
+    data = dict()
+    record = monetaryRecord.objects.get(id=66)
+    update_record_form = RecordForm(request.POST, instance=record)
+    if request.method == 'POST':
+        update_record_form = RecordForm(request.POST, instance=record)
+        if update_record_form.is_valid():
+            update_record_form.save()
+            data['form_is_valid'] = True
+        else:
+            data['form_is_valid'] = False
+    else:
+        update_record_form = RecordForm(request.POST, instance=record)
+
+    context = {'update_record_form': update_record_form, 'record': record}
+    data['html_form'] = render_to_string('records/record_update.html',
+        context,
+        request=request,
+    )
+    return JsonResponse(data)
 
 
 
-
+#update_record_form = RecordForm( initial = { 'user' : user })
+        #pk = request.POST.get('record_id', None)
+        #record = monetaryRecord.objects.get(id=66)
+        #update_record_form = RecordForm( initial = { 'user' : user }, instance=record)
 
 
 

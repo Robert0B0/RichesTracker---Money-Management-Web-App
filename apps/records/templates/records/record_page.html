@@ -5,62 +5,7 @@
 
 {% block content %}
 
-<style>
-body {
-    /*
-    background: url("/static/images/finances-2-B&W.jpg") fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; 
-    */
-    background: lightgray;
-}
-
-
-.Expenses {
-    color: #921919;
-}
-
-.Unforseen {
-    color: #f66300;
-}
-
-.Upkeep {
-    color: #c36363;
-}
-    
-.MonthylIncome {
-    color: #2cce34;
-}
-
-.Other {
-    color: #509e7e;
-}
-
-.GoalComplete{
-    color: #a17e1d;
-}
-
-.Investment{
-    color: #968e1e;
-}
-
-.InvestmentCash{
-    color: #961e78;
-}
-
-.SavingTip{
-    color: #8b9530;
-}
-
-.Dividents{
-    color: #282188;
-}
-
-.SavingFunds{
-    color: #9c79b9;
-}
-  </style>
+<link rel="stylesheet" href="{% static 'records/css/records.css' %}">
 
 <div class="container-fluid">
     <div class="row">
@@ -110,9 +55,13 @@ body {
                     <path fill-rule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
                   </svg>
             </a>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-add-modal">
+            <!--
+                Modal CRUD
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-add-modal">
                 New record
-              </button>
+                </button>
+            -->
+            
         </div>
         <hr>
         <table class="table table_id table-striped table-hover table-secondary">
@@ -144,10 +93,15 @@ body {
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                                 </svg>
-                                Change</a>
-                                <a type="button" class="btn btn-primary" data-toggle="modal" id="{{expenses.id}}" data-target="#record-update-modal" >
+                                Change
+                            </a>
+                            <!-- 
+                                Modal CRUD
+                                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#record-update-modal" >
                                   Edit
                                 </a>
+                            -->
+                            
                         </td>
                         <td class="text-left font-weight-bold" style="font-size: 150%;" >
                             <a class="btn btn-outline-danger btn-lg" href="{% url 'delete_record' expenses.id %}">
@@ -430,8 +384,11 @@ body {
 
 </div>
 
+<!--
+    modal CRUD
 {% include 'records/record_add.html' %}
-
+{% include 'records/record_update.html' %}
+-->
 
 
 
@@ -467,7 +424,7 @@ body {
     $("#record-add-modal").on("submit", function () {
         var form = $(this);
         $.ajax({
-            url: "{% url 'add_record'  %}",
+            url: "{% url 'add_record' %}",
             data: form.serialize(),
             type: form.attr("method"),
             dataType: 'json',
@@ -477,6 +434,29 @@ body {
               }
               else {
                $("#record-add-modal .modal-content").html(data.html_form);
+              }
+          }
+        });
+        return false;
+      });
+
+      $("#record-update-modal").on("submit", function () {
+        var form = $(this);
+        $.ajax({
+            url: "{% url 'update_record' %}",
+            data: form.serialize(),
+            type: form.attr("method"),
+            record_id = 66,
+            data: {
+                "record_id": record_id,
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.form_is_valid) {
+                $("#record-update-modal").modal("hide");
+              }
+              else {
+               $("#record-update-modal .modal-content").html(data.html_form);
               }
           }
         });

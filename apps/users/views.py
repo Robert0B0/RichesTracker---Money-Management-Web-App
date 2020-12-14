@@ -147,13 +147,13 @@ def context_add(request):
 @allowed_users(allowed_roles=['admins', 'monetary_users'])
 def home_page(request):
     records = request.user.monetaryuser.monetaryrecord_set.all()
-    goals = request.user.monetaryuser.monetarygoals_set.all()
+    goals = request.user.monetaryuser.monetarygoals_set.order_by("due_date")[:5]
     total_records = records.count()
-    total_goals = goals.count()
+    total_goals = request.user.monetaryuser.monetarygoals_set.count()
     user_name = request.user.username
     warning = request.user.monetaryuser.warning_amount
-    jars = request.user.monetaryuser.savingsjar_set.all()
-    total_jars = jars.count()
+    jars = request.user.monetaryuser.savingsjar_set.order_by("amount")[:5]
+    total_jars = request.user.monetaryuser.savingsjar_set.count()
 
     total_expenses = request.user.monetaryuser.monetaryrecord_set.filter(
         Q(category='expenses') | 

@@ -52,7 +52,7 @@ def investment_create(request):
         form = InvestmentForm(request.POST)
         if form.is_valid:
             form.save()
-            return redirect('/investments/investments/')
+            return redirect('/investments/')
             
     context = {'form': form}
     context = {**context_add(request), **context}
@@ -68,7 +68,7 @@ def investment_update(request, pk):
         form = InvestmentForm(request.POST, instance=plan)
         if form.is_valid:
             form.save()
-            return redirect('/investments/investments/')
+            return redirect('/investments/')
 
     context = {'form': form, 'plan': plan}
     context = {**context_add(request), **context}
@@ -85,7 +85,7 @@ def investment_delete(request, pk):
         
 
         plan.delete()
-        return redirect('/investments/investments/')
+        return redirect('/investments/')
 
     context = {'plan': plan}
     context = {**context_add(request), **context}
@@ -118,7 +118,7 @@ def investment_invest(request, pk):
 
     context = {'amount': amount, 'plan': plan}
     context = {**context_add(request), **context}
-    return render(request, 'investments/investment_invest.html', context)
+    return render(request, '/investment_invest.html', context)
 
 
 @login_required(login_url='login_page')
@@ -146,7 +146,7 @@ def investment_invest_all(request):
             plan_amount = plan.current_amount
             plan.current_amount = plan_amount + tip_ration
             plan.save()
-        return redirect('/investments/investments/')
+        return redirect('/investments/')
 
     context = {'tip': tip, 'plans': plans, 'plan_all': plan_all}
     context = {**context_add(request), **context}
@@ -175,7 +175,7 @@ def investment_cash_out(request, pk):
              )
         record.save()
         
-        return redirect('/investments/investments/')
+        return redirect('/investments/')
 
     context = {'plan': plan, 'value': value}
     context = {**context_add(request), **context}

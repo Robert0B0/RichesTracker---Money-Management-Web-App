@@ -34,7 +34,7 @@ def create_saving(request):
         form = SavingsForm(request.POST)
         if form.is_valid:
             form.save()
-            return redirect('/savings/savings/')
+            return redirect('/savings/')
             
     context = {'form': form}
     context = {**context_add(request), **context}
@@ -50,7 +50,7 @@ def update_saving(request, pk):
         form = SavingsForm(request.POST, instance=jar)
         if form.is_valid:
             form.save()
-            return redirect('/savings/savings/')
+            return redirect('/savings/')
 
     context = {'form': form, 'jar': jar}
     context = {**context_add(request), **context}
@@ -63,7 +63,7 @@ def delete_saving(request, pk):
     jar = savingsJar.objects.get(id=pk)
     if request.method == 'POST':
         jar.delete()
-        return redirect('/savings/savings/')
+        return redirect('/savings/')
 
     context = {'jar': jar}
     context = {**context_add(request), **context}
@@ -85,7 +85,7 @@ def break_saving(request, pk):
              )
         record.save()
         jar.delete()
-        return redirect('/savings/savings/')
+        return redirect('/savings/')
 
     context = {'jar': jar}
     context = {**context_add(request), **context}
@@ -113,7 +113,7 @@ def tip_saving(request, pk):
        
         jar.amount = jar_amount + Decimal(tip)
         jar.save()
-        return redirect('/savings/savings/')
+        return redirect('/savings/')
 
     context = {'tip': tip, 'jar': jar}
     context = {**context_add(request), **context}
@@ -144,7 +144,7 @@ def tip_all_savings(request):
             jar_amount = jar.amount
             jar.amount = jar_amount + tip_ration
             jar.save()
-        return redirect('/savings/savings/')
+        return redirect('/savings/')
 
     context = {'tip': tip, 'jars': jars, 'jar_all': jar_all}
     context = {**context_add(request), **context}

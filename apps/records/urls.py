@@ -11,6 +11,7 @@ urlpatterns = [
 
 
     path('create/', views.create_record_modal, name="add_record"),
+    path('update/', views.update_record_modal, name="update_record"),
     
 
 ]
