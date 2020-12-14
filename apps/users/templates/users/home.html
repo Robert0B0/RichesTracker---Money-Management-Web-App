@@ -159,7 +159,7 @@ for(var i = 0; i < rec_len; i++) {
                                      "&nbsp type: " + rec_types[i] + " ,  <br>" + 
                                      " &nbsp valuing: $" + rec_value[i] + " , &nbsp <br> " +
                                      " &nbsp date: " + rec_starts[i].substring(1, rec_starts[i].length-1) + " , &nbsp <br>" +
-                                     " &nbsp click to edit. &nbsp",
+                                     " &nbsp <b> click to edit. </b> &nbsp",
                         backgroundColor: rec_color[i],
                         url: "{% url 'record_form' 123 %}".replace('123', rec_id[i])
                     } 
@@ -171,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        initialDate: '2020-11-07',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',

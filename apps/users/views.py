@@ -36,7 +36,7 @@ def register_page(request):
                 user=user,
                 name=username,
                 min_worth=100,
-                monthly_icome=1000,
+                monthly_income=1000,
                 email=form.cleaned_data.get('email'),
              )
             username = form.cleaned_data.get('username')
@@ -74,7 +74,17 @@ def logout_user(request):
 @allowed_users(allowed_roles=['admins', 'monetary_users'])
 def settings_page(request):
     monetaryuser = request.user.monetaryuser
+    records = request.user.monetaryuser.monetaryrecord_set.all()
+    if records.count() == 0:
+        monetaryRecord.objects.create(
+            user = monetaryuser,
+            naming = 'Welcome',
+            amount= 100,
+            category='other'
+        )
+
     form = MonetaryUserForm(instance=monetaryuser)
+    
     if request.method == 'POST':
         form = MonetaryUserForm(request.POST, request.FILES, instance=monetaryuser)
         if form.is_valid():
@@ -89,7 +99,6 @@ def settings_page(request):
 # Global #
 
 def context_add(request):
-    #records = request.user.monetaryuser.monetaryrecord_set.all().order_by('date_created)
     records = request.user.monetaryuser.monetaryrecord_set.all()
     goals = request.user.monetaryuser.monetarygoals_set.all()
     total_records = records.count()
